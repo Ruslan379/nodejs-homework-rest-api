@@ -16,6 +16,10 @@ const contactSchema = Schema({
     phone: {
         type: String,
     },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    },
     favorite: {
         type: Boolean,
         default: false,
@@ -26,8 +30,9 @@ const contactSchema = Schema({
 //! Правильный код ошибки contactSchema
 contactSchema.post("save", handleSchemaValidationErrors)
 
+
 //* ++++++++++++++++++++++ Схемы ВАЛИДАЦИИ Joi +++++++++++++++++++++++++
-const contactJoiSchemaPostPut = Joi.object({
+const contactJoiSchemaPut = Joi.object({
     name: Joi.string()
         // .alphanum()
         .min(3)
@@ -43,6 +48,9 @@ const contactJoiSchemaPostPut = Joi.object({
         .min(5)
         .max(14)
         .required(),
+
+    owner: Joi.string(),
+    // .required(),
 
     favorite: Joi.bool()
         .optional(),
@@ -85,7 +93,7 @@ const Contact = model("contact", contactSchema); //! DB_HOST
 
 module.exports = {
     Contact,
-    contactJoiSchemaPostPut,
+    contactJoiSchemaPut,
     contactJoiSchemaPatch,
     contactJoiSchemaPatchFavorite
 };
