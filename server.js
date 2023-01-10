@@ -20,10 +20,9 @@ const { DB_HOST, PORT = 3000 } = process.env;
 
 //! 3-вариант NEW
 // async function main() {
-(() => {
+(async () => {
   try {
-    // await mongoose.connect(DB_HOST);
-    mongoose.connect(DB_HOST);
+    await mongoose.connect(DB_HOST);
     app.listen(PORT);
     console.log(`Server is running on the port: ${PORT}`.bgGreen.red);
     console.log(`Start HW-5`.bgRed.green);
