@@ -23,3 +23,37 @@
 
 //* Доп. задание-2: Сделать фильтрацию контактов по полю избранного (GET /contacts?favorite=true)
 //  http://localhost:3000/api/contacts?favorite=true
+
+
+
+//? ------------------ HW-5 ------------------
+//! serve static (app.js)
+// GET  -->   http://localhost:3000/public
+// GET  -->   http://localhost:3000/public/about.html
+// GET  -->   http://localhost:3000/public/text.txt
+// GET  -->   http://localhost:3000/api/files/download/My LOGO_74b3f8fd-5834-414a-ad39-a6f7761a1835.jpg
+// GET  -->   http://localhost:3000/api/files/download/Country of Crimson Clouds.jpg
+
+//! avatars
+// GET  -->   http://localhost:3000/public/avatars/avatar-194938.png
+// GET  -->   http://localhost:3000/public/avatars/avatar-805390.png
+// GET  -->   http://localhost:3000/public/avatars/avatar-805428.png
+// GET  -->   http://localhost:3000/public/avatars/avatar-5953714.png
+// GET  -->   http://localhost:3000/public/avatars/man-6997508.png
+// GET  -->   http://localhost:3000/public/avatars/monster-1459777.png
+// GET  -->   http://localhost:3000/public/avatars/woman-6997660.png
+// GET  -->   http://localhost:3000/public/avatars/avatar-Ruslan.jpg
+
+// GET  -->   http://localhost:3000/avatars/monster-1459777.png
+// GET  -->   http://localhost:3000/avatars/avatar-Ruslan.jpg
+
+//! files/upload (filesRouter.js)
+// POST  -->  http://localhost:3000/api/files/upload
+
+//! files/download (filesRouter.js)
+// USE  -->  http://localhost:3000/api/files/download/
+// USE  -->  http://localhost:3000/api/files/download/My LOGO_74b3f8fd-5834-414a-ad39-a6f7761a1835.jpg
+// USE  -->  http://localhost:3000/api/files/download/Country of Crimson Clouds.jpg
+
+//! 6. Обновление аватарки (avatarURL) пользователя
+// PATCH -- > http://localhost:3000/api/users/avatars
