@@ -3,10 +3,12 @@ const logger = require('morgan')
 const cors = require('cors')
 require("dotenv").config()
 require("colors");
+const path = require('path')
 
 const authRouter = require('./routes/api/authRouter.js');
 const contactsRouter = require('./routes/api/contactsRouter');
 // const usersRouter = require('./routes/api/usersRouter');
+
 
 
 //----------------------------------------------------------------
@@ -17,6 +19,12 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
+app.use(express.static("public")); //! Чтобы Express мог раздавать статические файлы из папки "/public"
+
+
+//! serve static
+app.use("/avatars", express.static("public/avatars"));
+
 
 // app.use('/api/users/current', usersRouter)
 app.use('/api/users', authRouter)
@@ -32,9 +40,9 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "Server ERROR" } = err;
   //! ===========================console============================
-  // console.log("!!! ОШИБКА !!!:".bgRed.white); 
-  // console.error(err.message.red); 
-  // console.log(""); 
+  console.log("!!! ОШИБКА !!!:".bgRed.white);
+  console.error(err.message.red);
+  console.log("");
   //! ==============================================================
   res.status(status).json({ message: err.message });
 })

@@ -2,7 +2,8 @@ const { User } = require("../../models/userModel.js");
 const { Conflict } = require("http-errors");
 
 const bcrypt = require("bcryptjs")
-
+//* gravatar
+const gravatar = require("gravatar");
 
 //-----------------------------------------------------------------------------
 const registrationController = async (req, res) => {
@@ -15,18 +16,13 @@ const registrationController = async (req, res) => {
     }
 
     //! ------------------------ Хеширование и засолка password --------------------------
-    //? 1-вариант
-    //! Пароль в явном виде (если не используется хеширование и засолка в userSchema (1 вариант))
-    // const newUser = await User.create({ email, password }); 
 
-    //? 2-вариант (самый простой)
-    //!  Хеширование и засолка password с помошью bcryptjs (или bcrypt)
-    // const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-    // const newUser = await User.create({ email, password: hashPassword }); 
+    //* gravatar
+    const avatarURL = gravatar.url(email);
 
     //? 3-вариант (самый сложный)
     //!  Хеширование и засока password с помошью bcryptjs (или bcrypt) используется в userSchema
-    const newUser = new User({ email });
+    const newUser = new User({ email, avatarURL }); //* gravatar
     await newUser.setPassword(password);
     await newUser.save();
     //! _______________________ Хеширование и засолка password _________________________
@@ -38,7 +34,8 @@ const registrationController = async (req, res) => {
         code: 201,
         user: {
             email,
-            subscription: newUser.subscription
+            subscription: newUser.subscription,
+            avatarURL //* gravatar
         }
     });
 };

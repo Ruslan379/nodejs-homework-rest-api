@@ -1,7 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const { validation, controllerWrapper, authMiddleware } = require("../../middlewares")
+const {
+    validation,
+    controllerWrapper,
+    authMiddleware,
+    uploadMiddleware,
+    changeImageByJimpMiddleware
+} = require("../../middlewares")
 
 const { authControllers: ctrl } = require("../../controllers")
 
@@ -41,5 +47,15 @@ router.get('/current', authMiddleware, controllerWrapper(ctrl.getCurrentControll
 router.patch('/', authMiddleware, validateMiddlewareChangeSubscription, controllerWrapper(ctrl.updatePatchUserSubscription)) //! 2-вариант
 
 
-// module.exports = { authRouter: router }
+//! 6. Обновление аватарки (avatarURL) пользователя
+//!    PATCH -- > api/users/avatars
+router.patch(
+    "/avatars",
+    authMiddleware,
+    uploadMiddleware.single("avatar"),
+    changeImageByJimpMiddleware,
+    controllerWrapper(ctrl.updateAvatar)
+);
+
+
 module.exports = router
