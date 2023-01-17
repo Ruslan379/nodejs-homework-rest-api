@@ -7,6 +7,8 @@ const { handleSchemaValidationErrors } = require("../helpers");
 const bcrypt = require("bcryptjs");
 
 //-----------------------------------------------------------------------------
+const emailRegexp = /^[\w.]+@[\w]+.[\w]+$/;
+
 const userSchema = Schema({
     email: {
         type: String,
@@ -31,6 +33,14 @@ const userSchema = Schema({
         required: [true, 'Avatar is required'],
         // default: null,
     },
+    verify: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+        required: [true, 'Verify token is required'],
+    },
 }, { versionKey: false, timestamps: true });
 
 
@@ -53,7 +63,6 @@ userSchema.methods.comparePassword = function (password) {
 }
 
 
-
 //! Правильный код ошибки contactSchema
 userSchema.post("save", handleSchemaValidationErrors)
 
@@ -63,6 +72,7 @@ const subscriptionList = ["starter", "pro", "business"];
 
 const registerJoiSchema = Joi.object({
     email: Joi.string()
+        .pattern(emailRegexp)
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua', 'org',] } })
         .required(),
     password: Joi.string()
@@ -75,6 +85,7 @@ const registerJoiSchema = Joi.object({
 //--------------------------------------------------------------------
 const loginJoiSchema = Joi.object({
     email: Joi.string()
+        .pattern(emailRegexp)
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua', 'org',] } })
         .required(),
     password: Joi.string()
@@ -85,6 +96,13 @@ const loginJoiSchema = Joi.object({
 const changeSubscriptionJoiSchema = Joi.object({
     subscription: Joi.string()
         .valueOf(...subscriptionList)
+        .required(),
+});
+//--------------------------------------------------------------------
+const verifyEmailJoiSchema = Joi.object({
+    email: Joi.string()
+        .pattern(emailRegexp)
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua', 'org',] } })
         .required(),
 });
 //* _______________________ Схемы ВАЛИДАЦИИ Joi _______________________
@@ -99,6 +117,7 @@ module.exports = {
     User,
     registerJoiSchema,
     loginJoiSchema,
-    changeSubscriptionJoiSchema
+    changeSubscriptionJoiSchema,
+    verifyEmailJoiSchema,
 };
 
