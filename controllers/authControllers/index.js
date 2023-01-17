@@ -5,6 +5,7 @@ const getCurrentController = require("./getCurrentController")
 const updatePatchUserSubscription = require("./updatePatchUserSubscription")
 const updateAvatar = require("./updateAvatar")
 const verifyEmail = require("./verifyEmail")
+const resendVerifyEmail = require("./resendVerifyEmail")
 
 
 module.exports = {
@@ -15,4 +16,5 @@ module.exports = {
     updatePatchUserSubscription,
     updateAvatar,
     verifyEmail,
+    resendVerifyEmail,
 }
