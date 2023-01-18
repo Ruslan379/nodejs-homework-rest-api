@@ -59,10 +59,10 @@ const registrationController = async (req, res) => {
     };
 
     //? ------------------ SendGrid -------------------
-    // await sendVerificationEmailSendGrid(mail); //! отправка подтверждениия (верификации) на email пользователя
+    await sendVerificationEmailSendGrid(mail); //! отправка подтверждениия (верификации) на email пользователя
 
     //todo -------------- Nodemailer ------------------
-    await sendVerificationEmailNodemailer(mail); //! отправка подтверждениия (верификации) на email пользователя
+    // await sendVerificationEmailNodemailer(mail); //! отправка подтверждениия (верификации) на email пользователя
 
 
     res.status(201).json({

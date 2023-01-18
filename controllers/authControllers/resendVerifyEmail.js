@@ -33,10 +33,10 @@ const resendVerifyEmail = async (req, res, next) => {
     };
 
     //? ------------------- SendGrid -------------------
-    // await sendVerificationEmailSendGrid(mail); //! отправка повторного подтверждениия (верификации) на email пользователя
+    await sendVerificationEmailSendGrid(mail); //! отправка повторного подтверждениия (верификации) на email пользователя
 
     //todo ---------------- Nodemailer ----------------
-    await sendVerificationEmailNodemailer(mail); //! отправка повторного подтверждениия (верификации) на email пользователя
+    // await sendVerificationEmailNodemailer(mail); //! отправка повторного подтверждениия (верификации) на email пользователя
 
 
     res.json({
