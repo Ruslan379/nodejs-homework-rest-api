@@ -14,12 +14,14 @@ const { authControllers: ctrl } = require("../../controllers")
 const {
     registerJoiSchema,
     loginJoiSchema,
-    changeSubscriptionJoiSchema
+    changeSubscriptionJoiSchema,
+    verifyEmailJoiSchema,
 } = require("../../models/userModel.js");
 
 const validateMiddlewareRegister = validation(registerJoiSchema);
 const validateMiddlewarelogin = validation(loginJoiSchema);
 const validateMiddlewareChangeSubscription = validation(changeSubscriptionJoiSchema);
+const validateMiddlewareVerifyEmail = validation(verifyEmailJoiSchema);
 
 //-----------------------------------------------------------------------------
 //! 1. Регистрация
@@ -48,7 +50,6 @@ router.patch('/', authMiddleware, validateMiddlewareChangeSubscription, controll
 
 
 //! 6. Обновление аватарки (avatarURL) пользователя
-//!    PATCH -- > api/users/avatars
 router.patch(
     "/avatars",
     authMiddleware,
@@ -57,5 +58,14 @@ router.patch(
     controllerWrapper(ctrl.updateAvatar)
 );
 
+//! 7. Верификация email пользователя
+router.get("/verify/:verificationToken", controllerWrapper(ctrl.verifyEmail));
 
+
+//! 8. Добавление повторной отправки email пользователю с ссылкой для верификации
+router.post(
+    "/verify",
+    validateMiddlewareVerifyEmail,
+    controllerWrapper(ctrl.resendVerifyEmail)
+);
 module.exports = router
